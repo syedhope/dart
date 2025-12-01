@@ -1,0 +1,1 @@
+{"columns":["id","date","amount","store_id","region","status"],"index":[0,1,2],"data":[["101","2025-01-01","150.0","101","US-EAST","mock_status_0"],["102","2025-01-01","160.5","102","US-EAST","mock_status_1"],["103","2025-01-01","171.0","103","US-EAST","mock_status_2"]]}

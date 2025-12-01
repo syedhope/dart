@@ -1,0 +1,2 @@
+# Local scenario selection cache (used for cross-process sync)
+.dart_active_scenario

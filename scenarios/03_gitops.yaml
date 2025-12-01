@@ -1,0 +1,46 @@
+# ==============================================================================
+# File Location: dart-agent/scenarios/03_gitops.yaml
+# Description: 
+#   Configuration for "Scenario 3: Bad Code (GitOps)".
+#   Simulates a logic error in a transformation script (Division by Zero).
+#   Requires Kai to generate a Pull Request (GitPR) instead of running SQL.
+# ==============================================================================
+
+scenario_id: "SCN_003_GITOPS"
+difficulty: "MEDIUM"
+description: "A logic error in the transformation pipeline requires a code fix (PR)."
+
+trigger_alert:
+  id: "ALERT_CODE_007"
+  source_system: "Airflow"
+  error_code: "TRANSFORM_ERROR"
+  message: "Task 'calc_daily_kpi' failed. Division by zero in script 'models/kpi/roi_calc.sql'."
+  severity: "CRITICAL"
+  metadata:
+    dag_id: "marketing_kpi"
+    file_path: "models/kpi/roi_calc.sql"
+
+environment_state:
+  # The "Mock GitHub" state
+  repo_files:
+    "models/kpi/roi_calc.sql": |
+       SELECT 
+         campaign_id,
+         revenue,
+         cost,
+         -- BUG: Division by zero if cost is 0
+         (revenue / cost) as roi 
+       FROM marketing_spend
+  
+  # Logs showing the crash
+  logs:
+    - service: "airflow_worker"
+      level: "ERROR"
+      content: "Psycopg2.DataError: division by zero"
+    - service: "airflow_scheduler"
+      level: "WARNING"
+      content: "Task marked as failed. Retrying..."
+      
+  vendor_status:
+    is_healthy: true
+    response_message: "All systems operational."

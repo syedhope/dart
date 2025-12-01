@@ -1,0 +1,36 @@
+scenario_id: SCN_008_SNOWFLAKE_GOOGLE
+difficulty: MEDIUM
+description: Snowflake stream pipeline breaks with an unmapped error.
+trigger_alert:
+  id: ALERT_SNOW_STREAM
+  source_system: Snowflake
+  error_code: SNOWFLAKE_STREAM_60779
+  message: 'Snowflake stream PIPELINE_STREAM stopped returning data: offset does not exist or stream was consumed elsewhere.'
+  severity: CRITICAL
+  metadata:
+    dag_id: marketing_etl
+    job_id: snowflake_transform
+    requires_google_lookup: true
+    table_name: MARKETING_SPEND
+    force_db_checks: true
+environment_state:
+  snowflake_schema:
+    table: MARKETING_SPEND
+    columns:
+    - campaign_id
+    - spend
+    - impressions
+    - clicks
+  incoming_file_header:
+    columns:
+    - campaign_id
+    - spend
+    - impressions
+    - clicks
+  logs:
+  - service: Snowflake
+    level: ERROR
+    content: 'SNOWFLAKE_STREAM_60779: Consuming stream PIPELINE_STREAM failed: Offset does not exist. Stream may have advanced.'
+  - service: Airflow
+    level: WARNING
+    content: Task snowflake_transform failed after stream returned 0 rows unexpectedly.

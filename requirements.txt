@@ -1,0 +1,15 @@
+chainlit==2.9.2
+fastmcp[server]
+fastapi
+uvicorn
+requests
+httpx
+pyyaml
+pydantic
+chromadb
+google-generativeai
+google-api-core
+google-adk
+mcp
+rich
+pandas

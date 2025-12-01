@@ -1,0 +1,61 @@
+# ==============================================================================
+# File Location: dart-agent/src/evaluate.py
+# Description: 
+#   Automated Scorecard.
+#   Runs multiple scenarios and grades D.A.R.T. on Success, Time, and Cost.
+#   Satisfies "Agent Evaluation" requirement.
+# ==============================================================================
+
+import asyncio
+from src.utils.config import config
+from src.utils.evaluation import run_scenario_file
+from rich.console import Console
+from rich.table import Table
+
+console = Console()
+
+async def main():
+    console.print("\n[bold blue]🤖 D.A.R.T. AGENT EVALUATION PROTOCOL[/bold blue]")
+    
+    # Define Test Suite
+    scenarios = ["01_drift.yaml", "03_gitops.yaml", "05_vendor_deadlock.yaml", "06_context_storm.yaml", "07_observability_guard.yaml", "08_snowflake_google.yaml", "09_kb_lookup.yaml"]
+    results = []
+
+    # Run Tests
+    for s in scenarios:
+        console.print(f"\n🧪 TESTING SCENARIO: {s}...")
+        res = await run_scenario_file(s)
+        results.append(res)
+
+    # Print Scorecard
+    table = Table(title="Evaluation Results")
+    table.add_column("Scenario", style="cyan")
+    table.add_column("Status", justify="center")
+    table.add_column("Method", style="magenta")
+    table.add_column("Duration", justify="right")
+    table.add_column("Est. Cost", justify="right")
+    table.add_column("Eff. Gain", justify="right")
+
+    passed = 0
+    for res in results:
+        status = "✅ PASS" if res.get("success") else "❌ FAIL"
+        if res.get("success"): passed += 1
+        
+        table.add_row(
+            res["scenario"],
+            status,
+            res.get("method", "-"),
+            f"{res.get('duration', 0)}s",
+            f"${res.get('cost', 0)}",
+            f"{res.get('efficiency', 0)}%"
+        )
+
+    console.print(table)
+    
+    score = (passed / len(scenarios)) * 100
+    console.print(f"\n[bold green]FINAL SCORE: {score}%[/bold green]")
+
+if __name__ == "__main__":
+    # Disable UI streaming for clean output
+    config.enable_ui_streaming = False
+    asyncio.run(main())

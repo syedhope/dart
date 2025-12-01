@@ -1,0 +1,66 @@
+/* D.A.R.T. Command Center Theme 
+   Style: Cyberpunk / Terminal
+   UPDATED: Added roster-card styling for visual improvements in the sidebar.
+*/
+
+/* Force Monospace Font for a 'Hacker' feel */
+body, p, h1, h2, h3, h4, h5, h6, span, div {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace !important;
+}
+
+/* Darker Backgrounds */
+.App {
+    background-color: #0d1117 !important;
+}
+
+/* Customize Message Bubbles */
+.message-content {
+    background-color: #161b22 !important;
+    border: 1px solid #30363d;
+    color: #c9d1d9 !important;
+}
+
+/* Hide Chainlit Branding (Clean Look) */
+a[href^="https://github.com/Chainlit"] {
+    display: none !important;
+}
+
+/* User Bubble (You) */
+.user-message {
+    background-color: #238636 !important; /* GitHub Green */
+    color: white !important;
+}
+
+/* Commander Bubble (Syx) */
+.assistant-message {
+    border-left: 4px solid #58a6ff; /* Blue */
+}
+
+/* Action Buttons */
+button {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+/* --- Roster Card Styling --- */
+.roster-card {
+    background-color: #161b22; /* Slightly darker than content */
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: #58a6ff; /* Blue for titles */
+}
+
+/* Target the entire chat history container */
+.chat-container {
+    padding-top: 0 !important;
+}

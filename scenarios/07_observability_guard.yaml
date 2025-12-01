@@ -1,0 +1,37 @@
+# ==============================================================================
+# File Location: dart-agent/scenarios/07_observability_guard.yaml
+# Description:
+#   Scenario 7: Observability Guard – Deploy reports success, but verification
+#   detects no schema change. Demonstrates post-deploy validation.
+# ==============================================================================
+
+scenario_id: "SCN_007_OBSERVABILITY"
+difficulty: "MEDIUM"
+description: "Patch execution claims success, but observability detects no change."
+
+trigger_alert:
+  id: "ALERT_OBS_707"
+  source_system: "Airflow"
+  error_code: "ERROR_OBS_GUARD"
+  message: "Data quality check still failing even after automated fix."
+  severity: "CRITICAL"
+  metadata:
+    dag_id: "observability_pipeline"
+    job_id: "obs_guard_test"
+    force_db_checks: true
+
+environment_state:
+  loop_control:
+    force_observability_failure: true
+  snowflake_schema:
+    table: "SALES_DATA"
+    columns: ["id", "date", "amount", "store_id", "region"]
+  incoming_file_header:
+    columns: ["id", "date", "amount", "store_id", "region", "currency_code"]
+  logs:
+    - service: "airflow_worker"
+      level: "ERROR"
+      content: "ERROR_OBS_GUARD: Currency code column still missing in SALES_DATA after deploy."
+    - service: "monitoring"
+      level: "WARNING"
+      content: "Observability Guard: schema mismatch persists."

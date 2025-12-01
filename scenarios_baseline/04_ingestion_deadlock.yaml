@@ -1,0 +1,44 @@
+# ==============================================================================
+# File Location: dart-agent/scenarios/04_ingestion_deadlock.yaml
+# Description:
+#   Scenario 4: Vendor Deadlock requiring multi-pass remediation.
+#   Pass 1: SQL cleanup fails because stage table is locked by the vendor sync.
+#   Pass 2: Syx triggers the vendor cursor reset tool, then SQL succeeds.
+# ==============================================================================
+
+scenario_id: "SCN_004_DEADLOCK"
+difficulty: "HARD"
+description: "Vendor API duplication causes Snowflake constraint failures until the cursor is reset."
+
+trigger_alert:
+  id: "ALERT_DEADLOCK_712"
+  source_system: "Airflow"
+  error_code: "ERROR_DEADLOCK_712"
+  message: "Vendor ingest failed: duplicate payload IDs caused constraint violation. Stage table locked."
+  severity: "CRITICAL"
+  metadata:
+    dag_id: "vendor_ingest_nightly"
+    job_id: "vendor_payload_sync"
+    requires_vendor_reset: true
+    loop_strategy_hint: "reset_vendor_cursor"
+
+environment_state:
+  loop_control:
+    require_vendor_reset: true
+    vendor_reset_recovered: false
+  snowflake_schema:
+    table: "SALES_DATA"
+    columns: ["id", "date", "amount", "store_id", "region", "status"]
+  incoming_file_header:
+    columns: ["id", "date", "amount", "store_id", "region", "status"]
+  logs:
+    - service: "airflow_worker"
+      level: "ERROR"
+      content: "ERROR_DEADLOCK_712: Duplicate payload_id detected. Stage table SALES_DATA locked by vendor sync."
+    - service: "airflow_scheduler"
+      level: "WARNING"
+      content: "Retry exhausted for task vendor_payload_sync. Suggest vendor reset."
+  vendor_behavior:
+    mode: "HONEST"
+    actual_status: "DEGRADED"
+    public_statement: "Degradation acknowledged. Reset cursor if lock persists."

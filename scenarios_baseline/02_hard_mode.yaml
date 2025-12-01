@@ -1,0 +1,45 @@
+# ==============================================================================
+# File Location: dart-agent/scenarios/02_hard_mode.yaml
+# File Name: 02_hard_mode.yaml
+# Description: 
+#   Configuration for "Scenario 2: The Lying Vendor".
+#   Simulates a complex failure where an API endpoint is timing out (503),
+#   but the external Vendor Bot is programmed to lie and return "HEALTHY".
+#   Expected Outcome: Agents must prioritize log evidence (503s) over 
+#   the Vendor's stated status.
+# ==============================================================================
+
+scenario_id: "SCN_002_LIAR"
+difficulty: "HARD"
+description: "API Failure where the vendor denies the outage."
+
+trigger_alert:
+  id: "ALERT_9941"
+  source_system: "API_Gateway"
+  error_code: "HTTP_503_TIMEOUT"
+  message: "High failure rate on 'GetInventory' endpoint. Upstream connection timed out."
+  severity: "CRITICAL"
+  metadata:
+    endpoint: "https://api.vendorbot.com/v1/inventory"
+    enable_vendor_dr: true
+
+environment_state:
+  # The Mock Enterprise Server (Process A) will serve these logs
+  logs:
+    - service: "api_gateway"
+      level: "ERROR"
+      content: "Connection refused to 192.168.1.50:8001 (VendorBot)"
+    - service: "airflow"
+      level: "WARNING"
+      content: "Retrying task 'fetch_inventory' (Attempt 3/5)..."
+
+  # The Vendor Bot (Process B) configuration
+  vendor_behavior:
+    mode: "LYING" # Tells Process B to return HEALTHY despite being broken
+    flaky_first_request: true # Deterministic 503 on first call to simulate outage
+    actual_status: "OUTAGE"
+    public_statement: "We are currently experiencing no issues. Check your firewall."
+
+  # Loop control for vendor reset
+  loop_control:
+    require_vendor_reset: true

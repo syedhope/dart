@@ -1,0 +1,38 @@
+scenario_id: SCN_001_DRIFT
+difficulty: EASY
+description: A standard schema mismatch caused by an upstream change.
+trigger_alert:
+  id: ALERT_8823
+  source_system: Airflow
+  error_code: ERROR_X99_UNKNOWN
+  message: "SNOWFLAKE_LOAD_ERROR: Load job failed: Table 'SALES_DATA' contains 5 columns, but input file has 6. Reference KB_ARTICLE_99."
+  severity: CRITICAL
+  metadata:
+    job_id: daily_sales_load
+    dag_id: finance_pipeline
+environment_state:
+  snowflake_schema:
+    table: SALES_DATA
+    columns:
+      - id
+      - date
+      - amount
+      - store_id
+      - region
+  incoming_file_header:
+    columns:
+      - id
+      - date
+      - amount
+      - store_id
+      - region
+      - currency_code
+  vendor_status:
+    is_healthy: true
+    response_message: All systems operational.
+  logs:
+    - service: Airflow
+      message: "SNOWFLAKE_LOAD_ERROR: ERROR_X99_UNKNOWN: Load job failed: Table 'SALES_DATA' contains 5 columns, but input file has 6."
+  knowledge_base:
+    - query: ERROR_X99_UNKNOWN
+      article: "KB_ARTICLE_99: Source file has more columns than target table. Recommended: ALTER TABLE."

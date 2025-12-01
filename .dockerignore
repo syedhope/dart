@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.venv
+venv
+logs
+dart_memory_store
+chainlit.md
+src.zip
+ui.zip
+*.DS_Store
+.git
+.gitignore
+.env

@@ -1,0 +1,3 @@
+Incident ID: eb0e592f-2110-473b-80e8-15d45290daeb
+Initial Alert: SNOWFLAKE_LOAD_ERROR: Load job failed: Table 'SALES_DATA' contains 5 columns, but input file has 6. Reference KB_ARTICLE_99.
+Vendor Status: HEALTHY (All systems operational.)

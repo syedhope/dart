@@ -1,0 +1,3 @@
+Incident ID: 8dd3c41b-977c-44ea-bbf0-1f0fc3e7db4c
+Initial Alert: High failure rate on 'GetInventory' endpoint. Upstream connection timed out.
+Vendor Status: HEALTHY (We are currently experiencing no issues. Check your firewall.)

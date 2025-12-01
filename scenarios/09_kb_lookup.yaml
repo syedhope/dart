@@ -1,0 +1,39 @@
+scenario_id: SCN_009_KB_LOOKUP
+difficulty: EASY
+description: Known error resolved via Knowledge Base entry.
+trigger_alert:
+  id: ALERT_KB_9001
+  source_system: Airflow
+  error_code: AIRFLOW_RETRY_TIMEOUT
+  message: Airflow job exceeded retry timeout and needs KB guidance.
+  severity: CRITICAL
+  metadata:
+    dag_id: retry_pipeline
+    job_id: timeout_job
+    requires_kb_lookup: true
+    force_db_checks: true
+    disable_drift: true
+    table_name: RETRY_AUDIT
+environment_state:
+  snowflake_schema:
+    table: RETRY_AUDIT
+    columns:
+    - job_id
+    - last_retry
+    - status
+  incoming_file_header:
+    columns:
+    - job_id
+    - last_retry
+    - status
+  logs:
+  - service: Airflow
+    level: ERROR
+    content: 'AIRFLOW_RETRY_TIMEOUT: Task exceeded retry timeout after 5 attempts.'
+  - service: Airflow
+    level: INFO
+    content: Use KB_ARTICLE_52 for mitigation guidance.
+  knowledge_base:
+  - query: AIRFLOW_RETRY_TIMEOUT
+    article: 'KB_ARTICLE_52: Task exceeded retry timeout. Check upstream dependency
+      health.'
