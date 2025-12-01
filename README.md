@@ -1,4 +1,4 @@
-# 🎯 D.A.R.T. — DataOps Autonomous Reliability Team
+# 🎯 D.A.R.T. - DataOps Autonomous Reliability Team
 
 <div align="center">
 
@@ -10,12 +10,28 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 <!-- [![Status](https://img.shields.io/badge/Status-Hackathon_Winner-gold?style=for-the-badge)]() -->
-[▶️ Watch 3-minute demo on YouTube](https://youtu.be/YOUR_VIDEO_ID)
+[▶️ Watch 3-minute demo on YouTube](https://youtu.be/nXNuMCB3Sw0)
 
 Built for [Agents Intensive - Capstone](https://www.kaggle.com/competitions/agents-intensive-capstone-project) submission in **Enterprise Agents**
 Track for the [**5-Day AI Agents Intensive Course with Google**](https://www.kaggle.com/learn-guide/5-day-agents).
 </div>
 
+---
+## ⚡ Quick Start
+
+**Get D.A.R.T. running in 30 seconds.**
+
+```bash
+# 1. Configure Environment (Add your keys to .env)
+cp .env.example .env
+
+# 2. Build the Container
+docker build -t dart-agent .
+
+# 3. Launch Mission Control
+docker run --env-file .env -p 8500:8500 dart-agent
+```
+### 🚀 Access the UI: Open [http://0.0.0.0:8500/](http://0.0.0.0:8500/) in your browser.
 ---
 <a id="top"></a>
 ## 📚 Table of Contents
@@ -63,6 +79,7 @@ Production pipelines fail in ways humans cannot triage fast enough: schema drift
 Unlike simple scripts, D.A.R.T. is an **Agentic Mesh** that runs fully autonomously negotiating with vendors, writing SQL, and generating GitOps PRs, stopping only when safety protocols require your approval. 
 <p align="right"><a href="#top">⬆️ Back to top</a></p>
 ---
+
 ## 🌟 Key Capabilities
 
 D.A.R.T. solves complex data operations challenges through a highly engineered multi-agent mesh.
@@ -210,7 +227,6 @@ flowchart TB
     Remediation -- MCP/Git/Jira --> Infra
     EchoAgent -- A2A --> V1
     V1 -- Status --> Control
-    Control --> n1["Untitled Node"] & n2["Untitled Node"]
     style Control fill:#C8E6C9
     style Evidence fill:#FFE0B2
     style EchoAgent fill:#B3E5FC
@@ -594,11 +610,11 @@ timeline
 ```
 
 
-### **Phase 1 — Structure: Roles, Loops & Operational Backbone**  
+### **Phase 1 - Structure: Roles, Loops & Operational Backbone**  
 I defined the five specialist agents: **Syx (Commander), Neon (Auditor), Kai (Engineer), Shield (Safety), Echo (Vendor Liaison)** and wired the OODA loop with HITL fail-safes.  
 This phase established the **multi-agent architecture**, MCP integration, and the A2A simulation environment.
 
-### **Phase 2 — Intelligence: Context Compaction & Memory Retrieval**  
+### **Phase 2 - Intelligence: Context Compaction & Memory Retrieval**  
 Telemetry overload is the enemy of clarity.  
 To prevent “agentic amnesia,” I implemented:
 
@@ -609,7 +625,7 @@ To prevent “agentic amnesia,” I implemented:
 
 D.A.R.T. could finally *remember* and reuse past solutions.
 
-### **Phase 3 — Trust: Safety, Transparency & Observability**  
+### **Phase 3 - Trust: Safety, Transparency & Observability**  
 Autonomy without safety is a liability.  
 I hardened the system with:
 
@@ -620,7 +636,7 @@ I hardened the system with:
 
 This phase ensured the system is **reliable, explainable, and auditable**.
 
-### **Phase 4 — Resilience: Tooling, Redundancy & Adversarial Defense**  
+### **Phase 4 - Resilience: Tooling, Redundancy & Adversarial Defense**  
 Production systems encounter noise, flakiness, and sometimes deceptive signals.
 
 I extended the system with:
@@ -633,7 +649,7 @@ I extended the system with:
 
 D.A.R.T. learned not just to react, but to defend itself.
 
-### **Phase 5 — Experience: Packaging, UX & Mission Control**  
+### **Phase 5 - Experience: Packaging, UX & Mission Control**  
 A powerful system needs to feel effortless to operate.
 
 Final enhancements included:
@@ -738,7 +754,7 @@ dart-agent/
 │  ├─ ui/                 (setup, bridge, render, actions)
 │  ├─ core/               (LLM integration)
 │  └─ memory/             (brain / vector memory)
-└─ public/.DS_Store, src.zip, ui.zip   (archives / stray artifacts)
+└─ screenshots/ (*multiple pngs) 
 ```
 ---
 # 🚀 Deployment & Reproducibility Guide
@@ -865,8 +881,3 @@ I simply request attribution back to the original project.
 ---
 
 ### **MIT License**
-
-
-
-
-
