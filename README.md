@@ -176,7 +176,7 @@ config:
   layout: elk
   theme: neo
 ---
-flowchart TB
+flowchart BT
  subgraph UI["Chainlit UI"]
         A["Mission Buttons / Alerts"]
         B["Renderers<br>Dataframes • Diffs • Context Audit • Tokenomics"]
@@ -235,6 +235,7 @@ flowchart TB
     style Memory fill:#757575
     style Infra fill:#FFCDD2
 ```
+
 ### <center>D.A.R.T. Runtime Architecture: Components, Agents, and Data Exchange</center>
 
 ---
@@ -263,7 +264,7 @@ config:
 layout: dagre
 theme: neo
 ---
-flowchart TB
+flowchart LR
     Syx("Syx: Commander") -- Query --> Memory[("Memory")]
     Syx -- Delegate --> Neon("Neon: Auditor") & Kai("Kai: Engineer") & Echo("Echo: Vendor Liaison")
     Neon -- Evidence --> Syx
