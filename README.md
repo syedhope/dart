@@ -10,7 +10,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 <!-- [![Status](https://img.shields.io/badge/Status-Hackathon_Winner-gold?style=for-the-badge)]() -->
-[▶️ Watch 3-minute demo on YouTube](https://youtu.be/y2MmQ2SdPI4)
+[▶️ Watch 3-minute demo on YouTube](https://youtu.be/i2eYR_-xyxw)
 
 Built for [Agents Intensive - Capstone](https://www.kaggle.com/competitions/agents-intensive-capstone-project) submission in **Enterprise Agents**
 Track for the [**5-Day AI Agents Intensive Course with Google**](https://www.kaggle.com/learn-guide/5-day-agents).
